@@ -1,0 +1,10 @@
+{
+  "chat.disableAIFeatures": true,
+  "github.copilot.enable": { "*": false },
+  "github.copilot.editor.enableAutoCompletions": false,
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "chat.commandCenter.enabled": false,
+  "chat.agent.enabled": false,
+  "inlineChat.accessibleDiffView": "off",
+  "terminal.integrated.initialHint": false
+}
