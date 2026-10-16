@@ -3,5 +3,7 @@ module.exports = {
   spec: ["test"],
   recursive: true,
   clearScreen: true,
+  parallel: true,
+  maxWorkers: 1,
   extension: ["ts"],
 };
