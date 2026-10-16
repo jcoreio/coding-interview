@@ -61,6 +61,7 @@ the `schema`, and `false` if invalid. For example:
 validate("a", { type: "string" }); // returns true
 validate(2, { type: "number" }); // returns true
 validate([], { type: "array" }); // returns true
+validate({}, { type: "object" }); // returns true
 
 // false (invalid) cases:
 validate(2, { type: "string" }); // returns false
@@ -140,33 +141,27 @@ validate(2, { required: ["a", "b"] }); // returns true
 validate({ a: 1 }, { required: ["a", "b"] }); // returns false
 ```
 
-# Part 5 - detailed errors
+# Bonus Part 5 - detailed errors
 
-You may not have time to implement this, but how would you refactor `validate`
-to throw an error containing specific messages about what was wrong at a given path?
+Let's say you want more detailed information about why validation failed instead of
+just `true` or `false`.
+Describe how would you refactor `validate` to output or throw more information about this.
+If you have time you're welcome to code it up!
+
+# Bonus Part 6 - magic TS types
+
+Let's say you want to declare JSON schemas in TypeScript. Can you implement TS conditional
+types to determine the type of a valid value for a given schema? Some things about JSON
+schema make this tricky, can you think what that would be?
 
 For example:
 
 ```ts
-validate(
-  { a: "1", b: ["foo", "bar", true] },
-  {
-    properties: {
-      a: { type: "number" },
-      b: { type: "array", items: { type: "string" } },
-    },
-  },
-);
-// throws JSONSchemaError {
-//   issues: [
-//     {
-//       path: ["a"],
-//       message: "must be a number"
-//     },
-//     {
-//       path: ["b", 2],
-//       message: "must be a string"
-//     }
-//   ]
-// }
+type Schema = { ... }
+type ValidValue<S extends Schema> =
+  S['type'] extends 'number' ? number
+  : S['type'] extends 'string' ? string
+  : ...
+
+type A = ValidValue<{ type: 'array', items: { type: "number" }}> // number[]
 ```
