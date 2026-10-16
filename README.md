@@ -86,13 +86,17 @@ validate([[1], [2, 3], 4], { items: { items: { type: "number" } } }); // returns
 
 # Part 3 - object property validation
 
-Add implementation and tests for validating `"properties".  That is, if the
-input is an object and the schema has a `"properties"`property, validate
-the property values of the input against the corresponding subschemas in`"properties"` (ignore any additional properties in the input). For example:
+Add implementation and tests for validating `"properties"`. That is, if the
+input is an object and the schema has a `"properties"` property, validate
+the property values of the input against the corresponding subschemas in`"properties"`
+(ignore any keys that are not in both the input and`"properties"`). For example:
 
 ```ts
 // true (valid) cases
-validate({ a: 1 }, { properties: { a: { type: "number" } } }); // returns true
+validate(
+  { a: 1 },
+  { properties: { a: { type: "number" }, b: { type: "string" } } },
+); // returns true
 validate(
   { a: 1, b: "3" },
   { properties: { a: { type: "number" }, b: { type: "string" } } },
@@ -115,13 +119,13 @@ validate(
 ); // returns false
 validate(
   { a: { c: 2 } },
-  { properties: { a: { properties: { b: { type: "number" } } } } },
+  { properties: { a: { properties: { c: { type: "string" } } } } },
 ); // returns false
 ```
 
 # Part 4 - required property validation
 
-Add implementation and tests for validating `"required".  That is, if the
+Add implementation and tests for validating `"required"`. That is, if the
 input is an object and the schema has a `"required"`property, validate
 that the input object contains all of the property keys in `"required"`.
 For example:
